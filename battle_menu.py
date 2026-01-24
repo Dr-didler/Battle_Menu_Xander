@@ -68,8 +68,25 @@ def starting_sequence():
             if user_hp <= 0:
                 print("you have been defeated, game over.")
                 return
-        else:
-            print("The battle reached the maximum number of rounds and ends.")
-        
+    
+def mini_boss_fight():
+    print("You have reached the mini boss... get ready unc...")
+    mini_boss_hp = Mini_boss_health
+    user_hp = User_starting_HP
+    user_attack = User_starting_attack
+    for turn in range(1000):
+        # player's attack
+        mini_boss_hp -= user_attack
+        print("The mini boss now has", mini_boss_hp)
+        if mini_boss_hp <= 0:
+            print("You have defeated the mini boss!")
+            return
+            # mini boss attacks
+        user_hp -= Mini_boss_damage
+        print("you have", user_hp, "left")
+        if user_hp <= 0:
+            print("you have been defeated by the mini boss, game over.")
+            return
 User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.")
 starting_sequence()
+mini_boss_fight() 
