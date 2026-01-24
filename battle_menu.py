@@ -73,7 +73,6 @@ def starting_sequence():
 
 def standard_fight_sequence():
     for enemy in range(enemy_count):
-        User_fight_count = int(input("How many enemys would you like to fight?"))
         enemy_hp = Enemy_starting_HP
         print("A new enemy appears with", enemy_hp, "HP.")
         # replace while-loop with a bounded for-loop to avoid infinite loops
@@ -95,15 +94,15 @@ def standard_fight_sequence():
             if user_hp <= 0:
                 print("you have been defeated, game over.")
                 return
-def player_fight_choice():
-    fight_choice = input("would you like to fight more enemys to get stronger before the mini boss? (yes/no)")
+def player_death_fight_choice():
+    fight_choice = input("would you like to restart? (yes/no)")
     if fight_choice == "yes":
         standard_fight_sequence()
     elif fight_choice == "no":
         print("You chose to face the mini boss.")
     else:
         print("Invalid choice, please type 'yes' or 'no'.")
-        player_fight_choice()
+        player_death_fight_choice()
 
 def mini_boss_fight():
     print("You have reached the mini boss... get ready unc...")
@@ -122,10 +121,10 @@ def mini_boss_fight():
         print("you have", user_hp, "left")
         if user_hp <= 0:
             print("you have been defeated by the mini boss, game over.")
+            player_death_fight_choice()
             return
 
 User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.")
 starting_sequence()
-player_fight_choice()
 mini_boss_fight() 
 
