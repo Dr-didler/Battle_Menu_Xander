@@ -40,10 +40,25 @@ enemy_count = random.randint(1,5)
 
 
 def starting_sequence():
-    if User_choice == 1:
+   # if User_choice == 1:
         print("ahead lay", enemy_count, "enemies, each current enemy has", Enemy_starting_HP, "you currently do", User_starting_attack, "per attack."  )
         Enemy_starting_HP - User_starting_attack 
         print("the enemy before you now has" , Enemy_starting_HP)
+        #add a loop here to keep fighting until all enemys are defeated
+        for enemy in range(enemy_count):
+            while Enemy_starting_HP > 0:
+                Enemy_starting_HP - User_starting_attack
+                print("the enemy before you now has" , Enemy_starting_HP)
+                if Enemy_starting_HP <= 0:
+                    print("you have defeated the enemy!")
+                    time_changing_post_fight()
+                    user_choice_upg()
+                    break
+                User_starting_HP - Enemy_starting_damage
+                print("you have", User_starting_HP, "left")
+                if User_starting_HP <= 0:
+                    print("you have been defeated, game over.")
+                    break
         
-User_choice = input("You walk into a coridor, enemy's lay ahead, what do you want to do from here? 2: run away, or 1: fight? ")
+User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.")
 starting_sequence()
