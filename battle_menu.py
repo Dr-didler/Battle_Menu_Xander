@@ -22,6 +22,7 @@ def time_changing_post_fight():
     Enemy_starting_HP += 20
     Enemy_starting_damage += 10
 #the user should be allowed to chose their own upgs after each fight, the only issue is that the mini boss outscales the player
+
 def user_choice_upg():
     global User_starting_HP, User_starting_attack, ability_to_atk
     User_buff = input("Chose a buff, extra health, extra damadge, or first attack next.(type in hp,dmg,atk)")
@@ -37,6 +38,7 @@ def user_choice_upg():
     else:
         print("No buff applied.")
 #this random number is for the amount of enemys you will fight, the larger the number, the more buffs you can apply
+
 enemy_count = random.randint(1,5)
 
 #note to self, next step is to add more enemys with diffrent stats and make sure they are replayable for buff farming, but mkae sure they are scaled appropiatly and not stronger then the mini boss
@@ -70,12 +72,25 @@ def starting_sequence():
                 return
     
 #this is a standard fight sequence that can be called again for farming buffs
+def enemy_farming():
+    mini_boss_want = input("Do you want to fight the mini boss or farm before you fight.")
+    if mini_boss_want == "yes":    
+        mini_boss_fight()
+    elif mini_boss_want == "no":
+        farm = input("how many enemys do you want to fight for buffs?")
+        for i in range(farm):
+            standard_fight_sequence()
+            break
+    else:
+        enemy_farming()
+
 
 def standard_fight_sequence():
     for enemy in range(enemy_count):
         enemy_hp = Enemy_starting_HP
         print("A new enemy appears with", enemy_hp, "HP.")
         # replace while-loop with a bounded for-loop to avoid infinite loops
+        #while loops werent working so i did whatever the monstrocity is below me
         for turn in range(1000):
             # player's attack
             enemy_hp -= user_attack
@@ -97,7 +112,7 @@ def standard_fight_sequence():
 def player_death_fight_choice():
     fight_choice = input("would you like to restart? (yes/no)")
     if fight_choice == "yes":
-        standard_fight_sequence()
+        starting_sequence()
     elif fight_choice == "no":
         print("You chose to face the mini boss.")
     else:
@@ -126,5 +141,6 @@ def mini_boss_fight():
 
 User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.")
 starting_sequence()
+enemy_farming()
 mini_boss_fight() 
 
