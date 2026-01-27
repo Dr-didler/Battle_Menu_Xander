@@ -25,7 +25,7 @@ def time_changing_post_fight():
 
 def user_choice_upg():
     global User_starting_HP, User_starting_attack, ability_to_atk
-    User_buff = input("Chose a buff, extra health, extra damadge, or first attack next.(type in hp,dmg,atk)")
+    User_buff = input("Chose a buff, extra health, extra damage, or first attack next.(type in hp,dmg,atk)")
     if User_buff == "dmg":
         User_starting_attack += 15
         print("Your attack buff now does", User_starting_attack, "dmg.")
@@ -73,17 +73,15 @@ def starting_sequence():
     
 #this is a standard fight sequence that can be called again for farming buffs
 def enemy_farming():
-    mini_boss_want = input("Do you want to fight the mini boss or farm before you fight.")
+    mini_boss_want = int(input("Do you want to fight the mini boss or farm before you fight(yes for mini boss, no for farming)."))
     if mini_boss_want == "yes":    
         mini_boss_fight()
     elif mini_boss_want == "no":
-        farm = input("how many enemys do you want to fight for buffs?")
-        for i in range(farm):
+        for i in range(enemy_count):
             standard_fight_sequence()
             break
     else:
         enemy_farming()
-
 
 def standard_fight_sequence():
     for enemy in range(enemy_count):
@@ -109,6 +107,8 @@ def standard_fight_sequence():
             if user_hp <= 0:
                 print("you have been defeated, game over.")
                 return
+            
+#if player wants to restart
 def player_death_fight_choice():
     fight_choice = input("would you like to restart? (yes/no)")
     if fight_choice == "yes":
@@ -124,12 +124,17 @@ def mini_boss_fight():
     mini_boss_hp = Mini_boss_health
     user_hp = User_starting_HP
     user_attack = User_starting_attack
+    print("your damage is" , user_attack, "your health is", user_hp)
     for turn in range(1000):
         # player's attack
         mini_boss_hp -= user_attack
         print("the mini boss now has", mini_boss_hp)
         if mini_boss_hp <= 0:
             print("You have defeated the mini boss")
+            print("he leaves behind an eccense, you claim it and feel your strength grow")
+            user_attack + 10
+            user_hp + 20
+            user_choice_upg()
             return
             # mini boss attacks
         user_hp -= Mini_boss_damage
@@ -139,8 +144,37 @@ def mini_boss_fight():
             player_death_fight_choice()
             return
 
-User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.")
+def boss_fight():
+    user_attack = User_starting_attack
+    print("After clearing the mini boss, theres a halway that bends around a corner, turning it, you see the final boss...")
+    is_the_player_scared = input("do you want to run away?(yes/no)")
+    if is_the_player_scared == "yes":
+        print("scarydy cat")
+        enemy_farming()
+    elif is_the_player_scared == "no":
+        print("the boss stands up straight, hes a foot taller then you, grabbing his zangetsu he walks twards you")
+        for turn in range(1000):
+        # player's attack
+            Boss_health -= user_attack
+            if Boss_health < 100:
+                Boss_health + Boss_regen
+                print("the boss has regained 20 hp, he now has", Boss_health)
+        print("the mini boss now has", Boss_health)
+        if Boss_health <= 0:
+            print("You have defeated the  boss")
+            return
+            # mini boss 
+        user_hp -= Mini_boss_damage
+        print("you have", user_hp, "left")
+        if user_hp <= 0:
+            print("you have been defeated by the boss, game over.")
+            player_death_fight_choice()
+            return
+
+        
+
+User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.(press enter)")
 starting_sequence()
 enemy_farming()
 mini_boss_fight() 
-
+boss_fight()
