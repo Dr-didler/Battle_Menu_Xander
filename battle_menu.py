@@ -130,11 +130,12 @@ def player_death_fight_choice():
         print("Invalid choice, please type 'yes' or 'no'.")
         player_death_fight_choice()
 
-def mini_boss_fight():
+def mini_boss_fight(starting_hp = User_starting_HP, starting_dmg = User_starting_attack):
     print("You have reached the mini boss... get ready unc...")
     mini_boss_hp = Mini_boss_health
-    user_hp = User_starting_HP
-    user_attack = User_starting_attack
+
+    user_hp = starting_hp
+    user_attack = starting_dmg
     print("your damage is" , user_attack, "your health is", user_hp)
     for turn in range(1000):
         # player's attack
@@ -166,9 +167,9 @@ def boss_fight():
         # player's attack
         Boss_health -= user_attack
         print("the boss now has", Boss_health)
-        if Boss_health <= 0:
-            print("You have defeated the boss")
-            defeat_sequence()
+        if Boss_health <= 70:
+            print("the boss stabs himself with the sword, trumpets burst out in song, his health regenerates...")
+            Boss_health + Boss_regen
             return
             # mini boss attacks
         user_hp -= Boss_dmg
@@ -184,6 +185,5 @@ def defeat_sequence():
 
 User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.(press enter)")
 starting_sequence()
-enemy_farming()
-mini_boss_fight() 
+mini_boss_fight()
 boss_fight()
