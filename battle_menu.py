@@ -5,10 +5,10 @@ User_starting_HP = int(100)
 User_starting_attack = int(20)
 Enemy_starting_HP = int(80)
 Enemy_starting_damage = int(15)
-Mini_boss_health = int(250)
+Mini_boss_health = int(140)
 Mini_boss_damage = int(45)
 #incorperate a regen only once for the boss, cant happen more then once
-Boss_health = int(350)
+Boss_health = int(250)
 Boss_regen = int(20)
 Boss_dmg = int(70)
 ability_to_atk = 0
@@ -53,7 +53,7 @@ def starting_sequence():
         print("A new enemy appears with", enemy_hp, "HP.")
         # replace while-loop with a bounded for-loop to avoid infinite loops
         for turn in range(1000):
-            # player's attack
+            # players attack
             enemy_hp -= user_attack
             print("the enemy before you now has", enemy_hp)
             if enemy_hp <= 0:
@@ -70,16 +70,24 @@ def starting_sequence():
             if user_hp <= 0:
                 print("you have been defeated, game over.")
                 return
-    
+#list of current issues, the mini boss or farming sequence is called after dying, need to fix that, i need a restart function
 #this is a standard fight sequence that can be called again for farming buffs
 def enemy_farming():
-    mini_boss_want = int(input("Do you want to fight the mini boss or farm before you fight(yes for mini boss, no for farming)."))
+    mini_boss_want = str(input("Do you want to fight the mini boss or farm before you fight(yes for mini boss, no for farming)."))
     if mini_boss_want == "yes":    
         mini_boss_fight()
     elif mini_boss_want == "no":
         for i in range(enemy_count):
             standard_fight_sequence()
-            break
+    else:
+        enemy_farming()
+def enemy_farming_2():
+    boss_want = str(input("Do you want to fight the boss or farm before you fight(yes for boss, no for farming)."))
+    if boss_want == "yes":    
+        boss_fight()
+    elif boss_want == "no":
+        for i in range(enemy_count):
+            standard_fight_sequence()
     else:
         enemy_farming()
 
@@ -92,7 +100,7 @@ def standard_fight_sequence():
         for turn in range(1000):
             # player's attack
             enemy_hp -= user_attack
-            print("the enemy before you now has", enemy_hp)
+            uchoice = input("the enemy before you now has", enemy_hp)
             if enemy_hp <= 0:
                 print("you have defeated the enemy")
                 time_changing_post_fight()
@@ -135,6 +143,7 @@ def mini_boss_fight():
             user_attack + 10
             user_hp + 20
             user_choice_upg()
+            enemy_farming_2()
             return
             # mini boss attacks
         user_hp -= Mini_boss_damage
@@ -145,32 +154,29 @@ def mini_boss_fight():
             return
 
 def boss_fight():
+    userchoice = input("The worlds fate rests on your shoulders, grabbing zangetsu, the boss walks into view. Do you wish to proceed?(press enter to proceed)")
+    Boss_health = Boss_health
+    user_hp = User_starting_HP
     user_attack = User_starting_attack
-    print("After clearing the mini boss, theres a halway that bends around a corner, turning it, you see the final boss...")
-    is_the_player_scared = input("do you want to run away?(yes/no)")
-    if is_the_player_scared == "yes":
-        print("scarydy cat")
-        enemy_farming()
-    elif is_the_player_scared == "no":
-        print("the boss stands up straight, hes a foot taller then you, grabbing his zangetsu he walks twards you")
-        for turn in range(1000):
+    print("your damage is" , user_attack, "your health is", user_hp)
+    for turn in range(1000):
         # player's attack
-            Boss_health -= user_attack
-            if Boss_health < 100:
-                Boss_health + Boss_regen
-                print("the boss has regained 20 hp, he now has", Boss_health)
-        print("the mini boss now has", Boss_health)
+        Boss_health -= user_attack
+        print("the boss now has", Boss_health)
         if Boss_health <= 0:
-            print("You have defeated the  boss")
+            print("You have defeated the boss")
+            defeat_sequence()
             return
-            # mini boss 
-        user_hp -= Mini_boss_damage
+            # mini boss attacks
+        user_hp -= Boss_dmg
         print("you have", user_hp, "left")
         if user_hp <= 0:
             print("you have been defeated by the boss, game over.")
             player_death_fight_choice()
             return
 
+def defeat_sequence():
+    print("Yu have defeated all enemies and bosses! Congratulations!")
         
 
 User_choice = input("You walk into a coridor, enemy's lay ahead, time to fight.(press enter)")
