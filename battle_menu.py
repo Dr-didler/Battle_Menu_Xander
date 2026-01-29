@@ -70,6 +70,7 @@ def starting_sequence():
             print("you have", user_hp, "left")
             if user_hp <= 0:
                 print("you have been defeated, game over.")
+                player_death_fight_choice()
                 return
 #list of current issues, the mini boss or farming sequence is called after dying, need to fix that, i need a restart function
 #this is a standard fight sequence that can be called again for farming buffs
@@ -115,6 +116,7 @@ def standard_fight_sequence():
             input("you have", user_hp, "left")
             if user_hp <= 0:
                 print("you have been defeated, game over.")
+                player_death_fight_choice()
                 return
             
 #if player wants to restart
