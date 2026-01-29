@@ -55,7 +55,8 @@ def starting_sequence():
         for turn in range(1000):
             # players attack
             enemy_hp -= user_attack
-            print("the enemy before you now has", enemy_hp)
+            input(f"You have {user_hp} HP left. Press Enter to continue...")
+            print("the enemy in front of you has", enemy_hp,"hp")
             if enemy_hp <= 0:
                 print("you have defeated the enemy")
                 time_changing_post_fight()
@@ -140,8 +141,8 @@ def mini_boss_fight():
         if mini_boss_hp <= 0:
             print("You have defeated the mini boss")
             print("he leaves behind an eccense, you claim it and feel your strength grow")
-            user_attack + 10
-            user_hp + 20
+            User_starting_attack += 10
+            User_starting_HP += 20
             user_choice_upg()
             enemy_farming_2()
             return
